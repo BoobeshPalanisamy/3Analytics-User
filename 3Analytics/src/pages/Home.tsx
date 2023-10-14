@@ -76,7 +76,7 @@ export class Home extends Component<HomeProps, HomeState> {
     }
   }
 
-  componentDidUpdate(prevProps: HomeProps, prevState: HomeState) {
+  componentDidUpdate(_prevProps: HomeProps, prevState: HomeState) {
     if (prevState.selectedUser != this.state.selectedUser) {
       this.fetchMessages();
     }

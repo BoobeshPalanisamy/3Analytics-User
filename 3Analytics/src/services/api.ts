@@ -69,8 +69,6 @@ const getMessages = async (receiverId: string, senderId: string) => {
 };
 
 const getUser = async (userId: string) => {
-  console.log(userId);
-
   try {
     const response = await httpWithCredentials.get<IChatUser[]>(
       `/user/getUser/${userId}`
@@ -83,7 +81,10 @@ const getUser = async (userId: string) => {
 
 const sendMessage = async (data: ISendMessage) => {
   try {
-    const response = await httpWithCredentials.post<IGetMessages>("/chat/chat",data);
+    const response = await httpWithCredentials.post<IGetMessages>(
+      "/chat/chat",
+      data
+    );
     return response.data;
   } catch (error) {
     throw error;
