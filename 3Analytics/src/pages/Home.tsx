@@ -12,6 +12,7 @@ import {
 } from "../interface/types";
 import { useAuthContext } from "../context/AuthContext";
 
+// Define the state and props types for the Home component
 type HomeState = {
   messagesData: IGetMessages[];
   users: IChatUser[];
@@ -21,6 +22,8 @@ type HomeState = {
 type HomeProps = {
   user: IUser | null;
 };
+
+// Create the Home class component
 export class Home extends Component<HomeProps, HomeState> {
   constructor(props: HomeProps) {
     super(props);
@@ -32,16 +35,19 @@ export class Home extends Component<HomeProps, HomeState> {
     };
   }
 
+  // Handler for when a user is clicked
   handleUserClick(user: IChatUser) {
     this.setState({ selectedUser: user._id });
   }
 
   componentDidMount() {
+    // Fetch the list of users when the component mounts
     this.fetchUsers();
   }
 
   async fetchUsers() {
     try {
+      // Fetch user data based on the logged-in user
       const userData = await getUser(this.props.user?.userId!);
       this.setState({ users: userData });
     } catch (error) {
@@ -51,6 +57,7 @@ export class Home extends Component<HomeProps, HomeState> {
 
   async fetchMessages() {
     try {
+      // Fetch messages between the logged-in user and the selected user
       const messagesData = await getMessages(
         this.props.user?.userId!,
         this.state.selectedUser
@@ -63,6 +70,7 @@ export class Home extends Component<HomeProps, HomeState> {
 
   async sendMessage() {
     try {
+      // Compose and send a message
       const messageToSend = {
         sender: this.props.user?.userId!,
         receiver: this.state.selectedUser,
@@ -78,6 +86,7 @@ export class Home extends Component<HomeProps, HomeState> {
 
   componentDidUpdate(_prevProps: HomeProps, prevState: HomeState) {
     if (prevState.selectedUser != this.state.selectedUser) {
+      // When the selected user changes, fetch messages for the new user
       this.fetchMessages();
     }
   }
@@ -172,6 +181,7 @@ export class Home extends Component<HomeProps, HomeState> {
   }
 }
 
+// Create a functional component that wraps the Home component with user context
 export default function () {
   const { user } = useAuthContext();
 

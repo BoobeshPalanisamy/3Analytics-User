@@ -9,6 +9,7 @@ import {
 } from "../interface/types";
 import { httpWithCredentials } from "./http";
 
+// Function to check if the user is authorized
 const isAuthorized = async () => {
   try {
     const response = await httpWithCredentials.get<IUser>("/user/isAuthorized");
@@ -18,6 +19,7 @@ const isAuthorized = async () => {
   }
 };
 
+// Function to perform user login
 const login = async (credential: ILoginFormInputs) => {
   try {
     const response = await httpWithCredentials.post<ILoginResponse>(
@@ -30,6 +32,7 @@ const login = async (credential: ILoginFormInputs) => {
   }
 };
 
+// Function to perform user registration (signup)
 const signUp = async (credential: ISignUp) => {
   try {
     const response = await httpWithCredentials.post<ILoginResponse>(
@@ -42,6 +45,7 @@ const signUp = async (credential: ISignUp) => {
   }
 };
 
+// Function to log the user out
 const logOut = async () => {
   try {
     const response = await httpWithCredentials.get<ILoginResponse>(
@@ -53,6 +57,7 @@ const logOut = async () => {
   }
 };
 
+// Function to retrieve chat messages between users
 const getMessages = async (receiverId: string, senderId: string) => {
   try {
     const response = await httpWithCredentials.post<IGetMessages[]>(
@@ -68,6 +73,7 @@ const getMessages = async (receiverId: string, senderId: string) => {
   }
 };
 
+// Function to retrieve user data by user ID
 const getUser = async (userId: string) => {
   try {
     const response = await httpWithCredentials.get<IChatUser[]>(
@@ -79,6 +85,7 @@ const getUser = async (userId: string) => {
   }
 };
 
+// Function to send a chat message
 const sendMessage = async (data: ISendMessage) => {
   try {
     const response = await httpWithCredentials.post<IGetMessages>(
@@ -91,6 +98,7 @@ const sendMessage = async (data: ISendMessage) => {
   }
 };
 
+// Export the functions for use in other parts of the application
 export {
   isAuthorized,
   login,

@@ -16,6 +16,7 @@ import { signUp } from "../../services/api";
 import { useAuthContext } from "../../context/AuthContext";
 import { paths } from "../../paths/paths";
 
+// Define a schema for form validation using yup
 const schema = yup.object().shape({
   phoneNumber: yup
     .string()
@@ -36,9 +37,12 @@ const schema = yup.object().shape({
 });
 
 function Signup() {
+  // Access the navigation object
   const navigate = useNavigate();
+  // Access the updateUserData function from the authentication context
   const { updateUserData } = useAuthContext();
 
+  // Initialize the react-hook-form with the schema and mode
   const {
     register,
     handleSubmit,
@@ -48,12 +52,15 @@ function Signup() {
     mode: "all",
   });
 
+  // Function to navigate to the login page
   const moveToLogin = () => {
     navigate(paths.LOGIN);
   };
 
+  // Function to handle the sign-up form submission
   const handleSign = async (data: ISignUpFormFields) => {
     if (data) {
+      // Prepare the sign-up data and include a "role" property
       var signUpFormData = {
         ...data,
         role: "user",
@@ -61,9 +68,11 @@ function Signup() {
       await signUp(signUpFormData)
         .then((response) => {
           if (response.data) {
+            // Update user data in the authentication context
             updateUserData({
               ...response.data,
             });
+            // Redirect to the home page
             navigate(paths.ROOT);
           }
         })

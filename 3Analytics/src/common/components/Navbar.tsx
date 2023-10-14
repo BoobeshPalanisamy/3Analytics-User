@@ -4,15 +4,17 @@ import { logOut } from "../../services/api";
 import { useLocation, useNavigate } from "react-router-dom";
 import { paths } from "../../paths/paths";
 
+// The Navbar component responsible for rendering the application's navigation bar
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
 
+  // Function to handle the logout button click
   const handleLogoutClick = async () => {
     await logOut()
       .then((response) => {
         if (response.status) {
-          navigate(paths.LOGIN);
+          navigate(paths.LOGIN); // Redirect to the login page after successful logout
         }
       })
       .catch((error) => {

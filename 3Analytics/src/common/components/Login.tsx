@@ -15,6 +15,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useNavigate } from "react-router-dom";
 import { paths } from "../../paths/paths";
 
+// Define a schema for form validation using yup
 const schema = yup.object().shape({
   phoneNumber: yup
     .string()
@@ -29,9 +30,12 @@ const schema = yup.object().shape({
 });
 
 function Login() {
+  // Access the navigation object
   const navigate = useNavigate();
+  // Access the updateUserData function from the authentication context
   const { updateUserData } = useAuthContext();
 
+  // Initialize the react-hook-form with the schema and mode
   const {
     register,
     handleSubmit,
@@ -41,15 +45,19 @@ function Login() {
     mode: "all",
   });
 
+  // Function to handle the login form submission
   const handleLogin = async (data: ILoginFormInputs) => {
     await login(data)
       .then((response) => {
         if (response.data) {
+          // Update user data in the authentication context
           updateUserData({
             ...response.data,
           });
+          // Redirect to the home page
           navigate(paths.ROOT);
         } else {
+          // Clear user data in the authentication context
           updateUserData(null);
         }
       })
@@ -60,7 +68,9 @@ function Login() {
       });
   };
 
+  // Function to handle clicking the registration link
   const handleRegisterLinkClick = () => {
+    // Navigate to the registration page
     navigate(paths.SIGNUP);
   };
 

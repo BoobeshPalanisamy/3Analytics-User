@@ -11,12 +11,14 @@ import AuthProvider from "./context/AuthContext";
 function App() {
   return (
     <>
+      {/* Wrap the entire application with the AuthProvider to manage authentication state */}
       <AuthProvider>
         <Routes>
           <Route path={paths.ROOT} element={<Layout />}>
             <Route
               index
               element={
+                // Use a PrivateRoute to protect the Home component, ensuring that the user is authenticated
                 <PrivateRoute>
                   <Home />
                 </PrivateRoute>
